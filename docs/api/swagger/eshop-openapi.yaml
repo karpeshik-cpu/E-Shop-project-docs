@@ -1,0 +1,1032 @@
+openapi: 3.0.0
+servers:
+  - description: SwaggerHub API Auto Mocking
+    url: https://virtserver.swaggerhub.com/KARPESH/1.0.0
+  - description: Postman Mock
+    url: https://77d8561e-3460-451e-b02d-92f26121a40c.mock.pstmn.io
+
+info:
+  version: "1.0.0"
+  title: API for the E-Shop
+  description: The API for the E-Shop
+  contact:
+    email: karpeshik@gmail.com
+
+tags:
+  - name: user
+    description: Пользователь (все категории пользователей)
+  - name: client
+    description: Покупатель (личный кабинет)
+  - name: admin
+    description: Администратор / Модерация / Управление каталогом
+
+paths:
+
+  /login:
+    post:
+      tags: 
+      - user
+      summary: Вход пользователя в систему
+      description: Аутентификация пользователя с использованием логина и пароля.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [username, password]
+              properties:
+                username:
+                  type: string
+                  description: Логин пользователя
+                  example: "user@email.ru"
+                password:
+                  type: string
+                  format: password
+                  description: Пароль пользователя
+                  example: "password"
+      responses:
+        '200':
+          description: Успешная аутентификация
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  accessToken:
+                    type: string
+                    description: JWT access token
+                    example: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+                  refreshToken:
+                    type: string
+                    description: Refresh token
+                    example: "def50200a1b2..."
+                  expiresIn:
+                    type: integer
+                    description: Срок жизни accessToken в секундах
+                    example: 1800
+        '400': { description: Некорректный запрос }
+        '401': { description: Неверные данные для входа }
+        '500': { description: Внутренняя ошибка сервера }
+
+  /products:
+    get:
+      tags: [user]
+      summary: Просмотр всех товаров
+      description: Получение списка всех товаров с пагинацией и сортировкой.
+      parameters:
+        - name: page
+          in: query
+          description: Номер страницы
+          required: false
+          schema: { type: integer, minimum: 1, default: 1 }
+        - name: limit
+          in: query
+          description: Кол-во на страницу
+          required: false
+          schema: { type: integer, minimum: 1, maximum: 100, default: 10 }
+        - name: sort_by
+          in: query
+          description: Поле сортировки
+          required: false
+          schema: { type: string, enum: [price, name], default: name }
+        - name: order
+          in: query
+          description: Порядок сортировки
+          required: false
+          schema: { type: string, enum: [asc, desc], default: desc }
+      responses:
+        '200':
+          description: Список товаров
+          content:
+            application/json:
+              schema:
+                type: array
+                items: { $ref: '#/components/schemas/product' }
+        '500': { description: Внутренняя ошибка сервера }
+
+  /products/{productId}:
+    get:
+      tags: 
+       - user
+      summary: Просмотр товара
+      description: Получение информации о конкретном товаре.
+      parameters:
+        - name: productId
+          in: path
+          required: true
+          description: Идентификатор товара
+          schema: { type: integer, example: 105 }
+      responses:
+        '200':
+          description: Товар найден
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/product' }
+        '404': 
+         description: Товар не найден
+        '500': 
+         description: Внутренняя ошибка сервера 
+
+  /groups:
+    get:
+      tags: 
+      - user
+      summary: Просмотр всех групп товаров
+      description: Получение списка всех групп.
+      responses:
+        '200':
+          description: Список групп товаров
+          content:
+            application/json:
+              schema:
+                type: array
+                items: { $ref: '#/components/schemas/group' }
+        '500': 
+         description: Внутренняя ошибка сервера 
+
+  /groups/{groupId}:
+    get:
+      tags: 
+      - user
+      summary: Просмотр группы товаров
+      description: Получение информации о группе.
+      parameters:
+        - name: groupId
+          in: path
+          required: true
+          description: Идентификатор группы
+          schema: 
+           type: integer
+           example: 1
+      responses:
+        '200':
+          description: Группа найдена
+          content:
+            application/json:
+              schema: 
+                $ref: '#/components/schemas/group'
+        '404':
+         description: Группа не найдена
+        '500': 
+         description: Внутренняя ошибка сервера
+
+  /addresses:
+    get:
+      tags: 
+       - client
+      summary: Список адресов клиента
+      description: Получение списка адресов текущего пользователя.
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Список адресов
+          content:
+            application/json:
+              schema:
+                type: array
+                items: 
+                 $ref: '#/components/schemas/address'
+        '401': 
+         description: Неавторизован
+        '403': 
+         description: Недостаточно прав
+        '500': 
+         description: Внутренняя ошибка сервера
+
+    post:
+      tags: 
+       - client
+      summary: Добавить новый адрес
+      description: Добавление нового адреса пользователя.
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: 
+             $ref: '#/components/schemas/addressCreate'
+            examples:
+              example1:
+                summary: Базовый адрес
+                value:
+                  address1: "ул. Ленина, д. 10"
+                  city: "Минск"
+                  country: "Беларусь"
+                  postcode: "220030"
+      responses:
+        '201': 
+         description: Адрес успешно добавлен
+        '400': 
+         description: Некорректные данные
+        '401': 
+         description: Неавторизован
+        '403': 
+         description: Недостаточно прав
+        '500': 
+         description: Внутренняя ошибка сервера
+
+  /addresses/{id}:
+    patch:
+      tags: 
+       - client
+      summary: Обновить адрес
+      description: Частичное обновление информации об адресе пользователя.
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          description: Идентификатор адреса
+          required: true
+          schema: 
+           type: integer
+           example: 1
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: 
+             $ref: '#/components/schemas/addressUpdate'
+            examples:
+              example1:
+                summary: Изменение телефона и квартиры
+                value:
+                  phone: "+375291112233"
+                  apartment: "45"
+      responses:
+        '200':
+          description: Адрес обновлён
+          content:
+            application/json:
+              schema: 
+               $ref: '#/components/schemas/address'
+        '400': 
+         description: Некорректные данные
+        '401': 
+         description: Неавторизован
+        '403': 
+         description: Недостаточно прав
+        '404':
+         description: Адрес не найден
+        '500':
+         description: Внутренняя ошибка сервера
+
+    delete:
+      tags: 
+       - client
+      summary: Удалить адрес
+      description: Удаление адреса пользователя.
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          description: Идентификатор адреса
+          required: true
+          schema: 
+           type: integer 
+           example: 1
+      responses:
+        '200': 
+         description: Адрес удалён
+        '401': 
+         description: Неавторизован
+        '403': 
+         description: Недостаточно прав
+        '404': 
+         description: Адрес не найден
+        '500': 
+         description: Внутренняя ошибка сервера
+
+  /orders:
+    get:
+      tags: 
+       - client
+      summary: Список заказов пользователя
+      description: Получение списка заказов текущего пользователя.
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Список заказов
+          content:
+            application/json:
+              schema:
+                type: array
+                items: 
+                 $ref: '#/components/schemas/order'
+        '401': 
+         description: Неавторизован
+        '403': 
+         description: Недостаточно прав
+        '500': 
+         description: Внутренняя ошибка сервера
+
+    post:
+      tags: 
+       - client
+      summary: Создать новый заказ (корзину)
+      description: Создание нового заказа пользователем.
+      security:
+        - bearerAuth: []
+      responses:
+        '201':
+          description: Заказ создан
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  orderId:
+                    type: integer
+                    example: 123
+        '401': 
+         description: Неавторизован
+        '403': 
+         description: Недостаточно прав
+        '500': 
+         description: Внутренняя ошибка сервера
+
+  /orders/{orderId}:
+    get:
+      tags: 
+       - client
+      summary: Просмотр заказа
+      description: Получение информации о заказе.
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: orderId
+          in: path
+          required: true
+          description: Идентификатор заказа
+          schema: 
+           type: integer
+          example: 123
+      responses:
+        '200':
+          description: Заказ найден
+          content:
+            application/json:
+              schema: 
+               $ref: '#/components/schemas/order'
+        '401': 
+         description: Неавторизован
+        '403': 
+         description: Недостаточно прав
+        '404': 
+         description: Заказ не найден
+        '500': 
+         description: Внутренняя ошибка сервера
+
+  /orders/{orderId}/items/{itemId}:
+    patch:
+      tags: 
+      - client
+      summary: Изменить количество товара в заказе
+      description: Изменение количества товара в заказе.
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: orderId
+          in: path
+          required: true
+          schema: 
+           type: integer
+           example: 123
+        - name: itemId
+          in: path
+          required: true
+          schema: 
+           type: integer
+           example: 10
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: 
+             $ref: '#/components/schemas/orderProductQuantityPatch'
+            examples:
+              example1:
+                value: 
+                 quantity: 3
+      responses:
+        '200':
+          description: Количество изменено
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  item: 
+                   $ref: '#/components/schemas/order'
+                  quantity:
+                    type: integer
+                    example: 3
+        '400': 
+         description: Некорректные данные
+        '401': 
+         description: Неавторизован
+        '403': 
+         description: Недостаточно прав
+        '404': 
+         description: Товар не найден в заказе
+
+    delete:
+      tags: 
+       - client
+      summary: Удалить товар из заказа
+      description: Удаление товара из заказа.
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: orderId
+          in: path
+          required: true
+          schema: 
+           type: integer
+           example: 123
+        - name: itemId
+          in: path
+          required: true
+          schema: 
+           type: integer
+           example: 10
+      responses:
+        '200': 
+         description: Товар удалён из заказа
+        '401': 
+         description: Неавторизован
+        '403': 
+         description: Недостаточно прав
+        '404': 
+         description: Товар не найден в заказе
+        '500': 
+         description: Внутренняя ошибка сервера
+
+  /reviews:
+    post:
+      tags: 
+       - client
+      summary: Оставить отзыв
+      description: Клиент добавляет отзыв о товаре.
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: 
+             $ref: '#/components/schemas/reviewCreate'
+            examples:
+              example1:
+                value:
+                  productId: 105
+                  rating: 5
+                  comment: "Отличный товар!"
+      responses:
+        '201': 
+         description: Отзыв создан
+        '400': 
+         description: Некорректные данные
+        '401': 
+         description: Неавторизован
+        '403': 
+         description: Недостаточно прав
+        '500': 
+         description: Внутренняя ошибка сервера
+
+  /admin/reviews:
+    get:
+      tags: 
+       - admin
+      summary: Список отзывов для модерации
+      description: Получение списка отзывов для проверки.
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Список отзывов
+          content:
+            application/json:
+              schema:
+                type: array
+                items: 
+                 $ref: '#/components/schemas/review'
+        '401': 
+         description: Неавторизован
+        '403': 
+         description: Недостаточно прав
+        '500': 
+         description: Внутренняя ошибка сервера
+
+  /admin/reviews/{reviewId}:
+    patch:
+      tags: 
+       - admin
+      summary: Изменить статус отзыва
+      description: Модерация отзыва (published/rejected/pending).
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: reviewId
+          in: path
+          required: true
+          schema: 
+           type: integer
+           example: 987
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: 
+             $ref: '#/components/schemas/reviewStatusPatch'
+            examples:
+              approve:
+                value: 
+                 status: "published"
+              reject:
+                value: 
+                 status: "rejected"
+      responses:
+        '200':
+          description: Статус отзыва изменён
+          content:
+            application/json:
+              schema: 
+               $ref: '#/components/schemas/review'
+        '400': 
+         description: Некорректные данные
+        '401': 
+         description: Неавторизован
+        '403': 
+         description: Недостаточно прав
+        '404': 
+         description: Отзыв не найден
+        '500': 
+         description: Внутренняя ошибка сервера
+
+  /admin/products:
+    post:
+      tags: 
+       - admin
+      summary: Создать новый товар
+      description: Администратор создаёт товар.
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: 
+             $ref: '#/components/schemas/productNew'
+            examples:
+              example1:
+                value:
+                  name: "Молоко"
+                  price_with_discount: 1.99
+                  group: "Молочные продукты"
+                  char_code: "SHP0001"
+                  count_of_warehouse: 1000
+      responses:
+        '201':
+          description: Товар создан
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id: 
+                   type: integer
+                   example: 105
+        '400': 
+         description: Некорректные данные
+        '401': 
+         description: Неавторизован 
+        '403': 
+         description: Недостаточно прав
+        '500': 
+         description: Внутренняя ошибка сервера
+
+  /admin/products/{productId}:
+    patch:
+      tags: 
+       - admin
+      summary: Обновить товар (частично)
+      description: Частичное обновление атрибутов товара (админ).
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: productId
+          in: path
+          required: true
+          schema: 
+           type: integer
+           example: 105 
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: 
+             $ref: '#/components/schemas/productUpdate'
+            examples:
+              example1:
+                value:
+                  price: 8.99
+                  currency: "BYN"
+                  inStock: true
+                  attributes: 
+                   fat: "50%"
+      responses:
+        '200':
+          description: Товар обновлён
+          content:
+            application/json:
+              schema: 
+               $ref: '#/components/schemas/productAdmin'
+        '400': 
+         description: Некорректные данные
+        '401': 
+         description: Неавторизован
+        '403': 
+         description: Недостаточно прав
+        '404': 
+         description: Товар не найден
+        '500': 
+         description: Внутренняя ошибка сервера
+
+    delete:
+      tags: [admin]
+      summary: Удалить товар
+      description: Удаление товара по идентификатору.
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: productId
+          in: path
+          required: true
+          schema: 
+           type: integer
+           example: 105
+      responses:
+        '200': 
+         description: Товар удалён
+        '401': 
+         description: Неавторизован
+        '403': 
+         description: Недостаточно прав
+        '404': 
+         description: Товар не найден
+        '500': 
+         description: Внутренняя ошибка сервера
+
+  /admin/groups:
+    post:
+      tags: 
+       - admin
+      summary: Создать группу товаров
+      description: Администратор создаёт новую группу.
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: 
+             $ref: '#/components/schemas/group'
+            examples:
+              example1:
+                value:
+                  name: "Молочные продукты"
+      responses:
+        '201': 
+         description: Группа создана
+        '400': 
+         description: Некорректные данные
+        '401': 
+         description: Неавторизован
+        '403': 
+         description: Недостаточно прав
+        '500': 
+         description: Внутренняя ошибка сервера
+
+  /admin/groups/{groupId}:
+    patch:
+      tags: 
+       - admin
+      summary: Обновить группу товаров (частично)
+      description: Частичное обновление свойств группы.
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: groupId
+          in: path
+          required: true
+          schema: 
+           type: integer
+           example: 1
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: false
+              properties:
+                name: 
+                 type: string
+                 example: "Сыры и молочные продукты"
+      responses:
+        '200':
+          description: Группа обновлена
+          content:
+            application/json:
+              schema: 
+               $ref: '#/components/schemas/group'
+        '400': 
+         description: Некорректные данные
+        '401': 
+         description: Неавторизован 
+        '403': 
+         description: Недостаточно прав
+        '404': 
+         description: Группа не найдена
+        '500': 
+         description: Внутренняя ошибка сервера
+
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+
+  schemas:
+    product:
+      type: object
+      required: 
+       - id
+       - name
+       - price_with_discount
+       - group
+       - char_code
+       - count_of_warehouse
+      properties:
+        id:
+          type: integer
+          description: Идентификатор товара
+          example: 105
+        name:
+          type: string
+          description: Название продукта
+          example: "Молоко"
+        price_with_discount:
+          type: number
+          format: decimal
+          description: Цена товара после скидки
+          example: 1.99
+        group:
+          type: string
+          description: Группа товара
+          example: "Молочные продукты"
+        char_code:
+          type: string
+          description: Штрих-код товара
+          example: "SHP0001"
+        count_of_warehouse:
+          type: integer
+          description: Количество на складе
+          example: 1000
+
+    productNew:
+      type: object
+      required: 
+       - name
+       - price_with_discount
+       - group
+       - char_code
+       - count_of_warehouse
+      properties:
+        name: 
+         type: string 
+         example: "Молоко"
+        price_with_discount: 
+         type: number
+         format: decimal
+         example: 1.99 
+        group: 
+         type: string
+         example: "Молочные продукты"
+        char_code: 
+         type: string
+         example: "SHP0001"
+        count_of_warehouse: 
+         type: integer
+         example: 1000
+
+    productAdmin:
+      type: object
+      properties:
+        id: 
+         type: integer
+         example: 105
+        name: 
+         type: string
+         example: "Молоко"
+        price: 
+         type: number
+         format: decimal
+         example: 8.99
+        currency: 
+         type: string
+         example: "BYN"
+        inStock: 
+         type: boolean
+         example: true
+        attributes:
+          type: object
+          additionalProperties: true
+          example: 
+           fat: "50%"
+        images:
+          type: array
+          items: 
+           type: string
+           example: "https://xxx.example.com/img1.jpg"
+
+    productUpdate:
+      type: object
+      additionalProperties: false
+      properties:
+        name: 
+         type: string
+        price: 
+         type: number
+         format: decimal
+        currency: 
+         type: string
+        inStock: 
+         type: boolean
+        attributes:
+          type: object
+          additionalProperties: true
+        images:
+          type: array
+          items: 
+           type: string
+
+    group:
+      type: object
+      required: 
+       - name
+      properties:
+        id: 
+         type: integer
+         example: 1
+        name: 
+         type: string
+         example: "Молочные продукты"
+
+    address:
+      type: object
+      properties:
+        id: 
+         type: integer
+         example: 1
+        address1: 
+         type: string
+         example: "ул. Ленина, д. 10"
+        address2: 
+         type: string
+         example: "к. 2"
+        apartment:
+         type: string
+         example: "45"
+        city: 
+          type: string
+          example: "Минск"
+        country: 
+         type: string
+         example: "Беларусь"
+        postcode: 
+         type: string
+         example: "220030"
+        phone: 
+         type: string
+         example: "+375291112233"
+      required: 
+       - address1
+       - city
+       - country
+       - postcode
+
+    addressCreate:
+      allOf:
+        - $ref: '#/components/schemas/address'
+      required:
+       - address1
+       - city
+       - country
+       - postcode
+
+    addressUpdate:
+      type: object
+      additionalProperties: false
+      properties:
+        address1: 
+         type: string
+        address2: 
+         type: string
+        apartment: 
+         type: string
+        city: 
+         type: string
+        country: 
+         type: string
+        postcode: 
+         type: string
+        phone: 
+         type: string
+
+    order:
+      type: object
+      required: 
+       - id
+       - status
+       - total_price
+      properties:
+        id: 
+         type: integer
+         example: 123
+        client_id: 
+         type: integer
+         example: 456
+        status: 
+         type: string
+         example: "new"
+        order_date: 
+         type: string
+         format: date
+         example: "30-12-2024"
+        total_price: 
+         type: number
+         format: decimal
+         example: 100.5
+
+    orderProductQuantityPatch:
+      type: object
+      required: 
+       - quantity
+      properties:
+        quantity:
+          type: integer
+          minimum: 1
+          example: 3
+
+    review:
+      type: object
+      properties:
+        reviewId: 
+         type: integer
+         example: 987
+        productId: 
+         type: integer
+         example: 105
+        rating: { type: integer, example: 5 }
+        comment: { type: string, example: "Отлично!" }
+        status: { type: string, example: "pending" }
+   
+    reviewCreate:
+      type: object
+      required:
+       - productId
+       - rating
+       - comment
+      properties:
+        productId: 
+         type: integer
+         example: 105
+        rating: 
+         type: integer
+         minimum: 1
+         maximum: 5
+         example: 5
+        comment: 
+         type: string
+         example: "Отличный товар!"
+
+    reviewStatusPatch:
+      type: object
+      required: 
+       - status
+      properties:
+        status:
+          type: string
+          enum: 
+           - pending
+           - published
+           - rejected
+          example: published
