@@ -1,0 +1,37 @@
+site_name: Project Docs (E-Shop)
+theme:
+  name: material
+markdown_extensions:
+  - toc:
+      permalink: true
+  - admonition
+  - tables
+
+nav:
+  - Home: index.md
+
+  - Diagrams:
+    - C4:
+      - Context: diagrams/c4/context/index.md
+      - Containers: diagrams/c4/containers/index.md
+      - Components: diagrams/c4/components/index.md
+
+  - Data Models:
+    - Conceptual: data-models/conceptual/index.md
+    - Logica;: data-models/logical/index.md
+    - Physical: data-models/physical/index.md
+
+  - Requirements:
+    - Use Cases (MVP): analysis/use-cases-mvp.md
+    - Products Edit: requirements/feature-edit-product.md
+    - Non-Functional Requirements: requirements/non-functional-requirements.md
+
+  - Architecture:
+    - Architecture Rationale: architecture/architecture-selection.md
+
+  - API:
+    - REST API: api/rest-api.md
+    - Swagger: api/swagger/eshop-openapi.yaml
+
+  - Integration:
+    - Kafka Documentation: integration/kafka.md
