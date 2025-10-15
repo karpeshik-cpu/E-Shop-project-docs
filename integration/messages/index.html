@@ -9,6 +9,8 @@
       
       
       
+        <link rel="prev" href="../kafka/">
+      
       
       
       <link rel="icon" href="../../assets/images/favicon.png">
@@ -16,7 +18,7 @@
     
     
       
-        <title>Messages - Project Docs (E-Shop)</title>
+        <title>Messages and Examples - Project Docs (E-Shop)</title>
       
     
     
@@ -94,7 +96,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Messages
+              Messages and Examples
             
           </span>
         </div>
@@ -756,18 +758,20 @@
       
   
   
+    
   
   
+  
     
     
     
     
     
-    <li class="md-nav__item md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7" checked>
         
           
           <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="0">
@@ -783,7 +787,7 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="false">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="true">
           <label class="md-nav__title" for="__nav_7">
             <span class="md-nav__icon md-icon"></span>
             Integration
@@ -808,6 +812,632 @@
   
 
       </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    Messages and Examples
+    
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    Messages and Examples
+    
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#topic-userregistered" class="md-nav__link">
+    <span class="md-ellipsis">
+      TOPIC: user.registered
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="TOPIC: user.registered">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#schema" class="md-nav__link">
+    <span class="md-ellipsis">
+      Schema
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#example" class="md-nav__link">
+    <span class="md-ellipsis">
+      Example
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#topic-userpasswordresetrequested" class="md-nav__link">
+    <span class="md-ellipsis">
+      TOPIC: user.password.reset.requested
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="TOPIC: user.password.reset.requested">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#schema_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      Schema
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#example_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      Example
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#topic-userpasswordresetcompleted" class="md-nav__link">
+    <span class="md-ellipsis">
+      TOPIC: user.password.reset.completed
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="TOPIC: user.password.reset.completed">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#schema_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      Schema
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#example_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      Example
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#topic-addressadded" class="md-nav__link">
+    <span class="md-ellipsis">
+      TOPIC: address.added
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="TOPIC: address.added">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#schema_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      Schema
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#example_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      Example
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#topic-addressupdated" class="md-nav__link">
+    <span class="md-ellipsis">
+      TOPIC: address.updated
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="TOPIC: address.updated">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#schema_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      Schema
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#example_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      Example
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#topic-addressdeleted" class="md-nav__link">
+    <span class="md-ellipsis">
+      TOPIC: address.deleted
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="TOPIC: address.deleted">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#schema_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      Schema
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#example_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      Example
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#topic-ordercreated" class="md-nav__link">
+    <span class="md-ellipsis">
+      TOPIC: order.created
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="TOPIC: order.created">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#schema_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      Schema
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#example_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      Example
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#topic-orderstatuschanged" class="md-nav__link">
+    <span class="md-ellipsis">
+      TOPIC: order.status.changed
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="TOPIC: order.status.changed">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#schema_7" class="md-nav__link">
+    <span class="md-ellipsis">
+      Schema
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#example_7" class="md-nav__link">
+    <span class="md-ellipsis">
+      Example
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#topic-paymentsucceeded" class="md-nav__link">
+    <span class="md-ellipsis">
+      TOPIC: payment.succeeded
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="TOPIC: payment.succeeded">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#schema_8" class="md-nav__link">
+    <span class="md-ellipsis">
+      Schema
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#example_8" class="md-nav__link">
+    <span class="md-ellipsis">
+      Example
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#topic-paymentfailed" class="md-nav__link">
+    <span class="md-ellipsis">
+      TOPIC: payment.failed
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="TOPIC: payment.failed">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#schema_9" class="md-nav__link">
+    <span class="md-ellipsis">
+      Schema
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#example_9" class="md-nav__link">
+    <span class="md-ellipsis">
+      Example
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#topic-productcreated" class="md-nav__link">
+    <span class="md-ellipsis">
+      TOPIC: product.created
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="TOPIC: product.created">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#schema_10" class="md-nav__link">
+    <span class="md-ellipsis">
+      Schema
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#example_10" class="md-nav__link">
+    <span class="md-ellipsis">
+      Example
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#topic-productupdated" class="md-nav__link">
+    <span class="md-ellipsis">
+      TOPIC: product.updated
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="TOPIC: product.updated">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#schema_11" class="md-nav__link">
+    <span class="md-ellipsis">
+      Schema
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#example_11" class="md-nav__link">
+    <span class="md-ellipsis">
+      Example
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#topic-productdeleted" class="md-nav__link">
+    <span class="md-ellipsis">
+      TOPIC: product.deleted
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="TOPIC: product.deleted">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#schema_12" class="md-nav__link">
+    <span class="md-ellipsis">
+      Schema
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#example_12" class="md-nav__link">
+    <span class="md-ellipsis">
+      Example
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#topic-reviewcreated" class="md-nav__link">
+    <span class="md-ellipsis">
+      TOPIC: review.created
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="TOPIC: review.created">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#schema_13" class="md-nav__link">
+    <span class="md-ellipsis">
+      Schema
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#example_13" class="md-nav__link">
+    <span class="md-ellipsis">
+      Example
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#topic-reviewpublished" class="md-nav__link">
+    <span class="md-ellipsis">
+      TOPIC: review.published
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="TOPIC: review.published">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#schema_14" class="md-nav__link">
+    <span class="md-ellipsis">
+      Schema
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#example_14" class="md-nav__link">
+    <span class="md-ellipsis">
+      Example
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#topic-reviewrejected" class="md-nav__link">
+    <span class="md-ellipsis">
+      TOPIC: review.rejected
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="TOPIC: review.rejected">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#schema_15" class="md-nav__link">
+    <span class="md-ellipsis">
+      Schema
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#example_15" class="md-nav__link">
+    <span class="md-ellipsis">
+      Example
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#topic-inventoryupdated" class="md-nav__link">
+    <span class="md-ellipsis">
+      TOPIC: inventory.updated
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="TOPIC: inventory.updated">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#schema_16" class="md-nav__link">
+    <span class="md-ellipsis">
+      Schema
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#example_16" class="md-nav__link">
+    <span class="md-ellipsis">
+      Example
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
     </li>
   
 
