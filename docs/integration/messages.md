@@ -58,7 +58,7 @@
 }
 
 
-## TOPIC: user.password.reset.completed
+### TOPIC: user.password.reset.completed
 
 **Schema:**
 ```json
