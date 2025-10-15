@@ -6,7 +6,7 @@ markdown_extensions:
       permalink: true
   - admonition
   - tables
-
+   
 nav:
   - Home: index.md
 
