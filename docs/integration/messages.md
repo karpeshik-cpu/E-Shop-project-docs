@@ -1,7 +1,10 @@
-# Message schemes and examples
-## TOPIC: user.registered
 
-**Schema:**
+[message-schemas.md](https://github.com/user-attachments/files/22920825/message-schemas.md)
+# Message Schemas and Examples
+
+## TOPIC: `user.registered`
+
+### Schema
 ```json
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
@@ -18,8 +21,9 @@
   },
   "required": ["userId", "email", "verificationRequired", "registeredAt"]
 }
+```
 
-**Example:**
+### Example
 ```json
 {
   "userId": 98765,
@@ -29,10 +33,13 @@
   "verificationRequired": true,
   "registeredAt": "2025-10-11T14:20:58Z"
 }
+```
 
-## TOPIC: user.password.reset.requested
+---
 
-**Schema:**
+## TOPIC: `user.password.reset.requested`
+
+### Schema
 ```json
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
@@ -47,8 +54,9 @@
   },
   "required": ["userId", "email", "requestedAt"]
 }
+```
 
-**Example:**
+### Example
 ```json
 {
   "userId": 98765,
@@ -56,11 +64,13 @@
   "tokenId": "rst_2f9c8a",
   "requestedAt": "2025-10-11T14:25:09Z"
 }
+```
 
+---
 
-### TOPIC: user.password.reset.completed
+## TOPIC: `user.password.reset.completed`
 
-**Schema:**
+### Schema
 ```json
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
@@ -75,8 +85,9 @@
   },
   "required": ["userId", "email", "completedAt"]
 }
+```
 
-**Example:**
+### Example
 ```json
 {
   "userId": 98765,
@@ -84,11 +95,14 @@
   "completedAt": "2025-10-11T14:29:47Z",
   "method": "email"
 }
+```
 
+---
 
-TOPIC: address.added
+## TOPIC: `address.added`
 
-Schema:
+### Schema
+```json
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
   "title": "address.added",
@@ -107,8 +121,10 @@ Schema:
   },
   "required": ["userId", "addressId", "line1", "city", "country", "zip", "createdAt"]
 }
+```
 
-Example:
+### Example
+```json
 {
   "userId": 1001,
   "addressId": 501,
@@ -120,11 +136,13 @@ Example:
   "isDefault": true,
   "createdAt": "2025-10-11T09:00:00Z"
 }
+```
 
+---
 
-## TOPIC: address.updated
+## TOPIC: `address.updated`
 
-**Schema:**
+### Schema
 ```json
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
@@ -144,8 +162,9 @@ Example:
   },
   "required": ["userId", "addressId", "updatedAt"]
 }
+```
 
-**Example:**
+### Example
 ```json
 {
   "userId": 1001,
@@ -153,11 +172,13 @@ Example:
   "phone": "+375292222222",
   "updatedAt": "2025-10-11T10:10:00Z"
 }
+```
 
+---
 
-## TOPIC: address.deleted
+## TOPIC: `address.deleted`
 
-**Schema:**
+### Schema
 ```json
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
@@ -171,18 +192,22 @@ Example:
   },
   "required": ["userId", "addressId", "deletedAt"]
 }
+```
 
-**Example:**
+### Example
 ```json
 {
   "userId": 1001,
   "addressId": 501,
   "deletedAt": "2025-10-11T12:00:00Z"
 }
+```
 
-## TOPIC: order.created
+---
 
-**Schema:**
+## TOPIC: `order.created`
+
+### Schema
 ```json
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
@@ -227,8 +252,9 @@ Example:
   },
   "required": ["orderId", "email", "items", "delivery", "total", "currency", "status", "createdAt"]
 }
+```
 
-**Example:**
+### Example
 ```json
 {
   "orderId": 12345,
@@ -244,11 +270,13 @@ Example:
   "status": "NEW",
   "createdAt": "2025-10-11T13:44:57Z"
 }
+```
 
+---
 
-## TOPIC: order.status.changed
+## TOPIC: `order.status.changed`
 
-**Schema:**
+### Schema
 ```json
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
@@ -263,8 +291,9 @@ Example:
   },
   "required": ["orderId", "newStatus", "changedAt"]
 }
+```
 
-**Example:**
+### Example
 ```json
 {
   "orderId": 12345,
@@ -272,11 +301,13 @@ Example:
   "changedBy": "admin@eshop.local",
   "changedAt": "2025-10-11T15:00:00Z"
 }
+```
 
+---
 
-## TOPIC: payment.succeeded
+## TOPIC: `payment.succeeded`
 
-**Schema:**
+### Schema
 ```json
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
@@ -292,8 +323,9 @@ Example:
   },
   "required": ["orderId", "paymentId", "amount", "currency", "paidAt"]
 }
+```
 
-**Example:**
+### Example
 ```json
 {
   "orderId": 12345,
@@ -302,11 +334,13 @@ Example:
   "currency": "BYN",
   "paidAt": "2025-10-11T14:01:00Z"
 }
+```
 
+---
 
-## TOPIC: payment.failed
+## TOPIC: `payment.failed`
 
-**Schema:**
+### Schema
 ```json
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
@@ -324,8 +358,9 @@ Example:
   },
   "required": ["orderId", "paymentId", "amount", "currency", "failedAt", "errorCode"]
 }
+```
 
-**Example:**
+### Example
 ```json
 {
   "orderId": 12345,
@@ -336,11 +371,13 @@ Example:
   "errorCode": "DECLINED",
   "errorMessage": "Issuer declined"
 }
+```
 
+---
 
-## TOPIC: product.created
+## TOPIC: `product.created`
 
-**Schema:**
+### Schema
 ```json
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
@@ -359,8 +396,9 @@ Example:
   },
   "required": ["productId", "name", "price", "currency", "inStock", "createdAt"]
 }
+```
 
-**Example:**
+### Example
 ```json
 {
   "productId": 105,
@@ -372,10 +410,13 @@ Example:
   "images": ["https://cdn.example.com/p/105.jpg"],
   "createdAt": "2025-10-11T09:30:00Z"
 }
+```
 
-## TOPIC: product.updated
+---
 
-**Schema:**
+## TOPIC: `product.updated`
+
+### Schema
 ```json
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
@@ -394,8 +435,9 @@ Example:
   },
   "required": ["productId", "updatedAt"]
 }
+```
 
-**Example:**
+### Example
 ```json
 {
   "productId": 105,
@@ -403,11 +445,13 @@ Example:
   "inStock": true,
   "updatedAt": "2025-10-11T11:45:00Z"
 }
+```
 
+---
 
-## TOPIC: product.deleted
+## TOPIC: `product.deleted`
 
-**Schema:**
+### Schema
 ```json
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
@@ -420,18 +464,21 @@ Example:
   },
   "required": ["productId", "deletedAt"]
 }
+```
 
-**Example:**
+### Example
 ```json
 {
   "productId": 105,
   "deletedAt": "2025-10-11T12:00:00Z"
 }
+```
 
+---
 
-## TOPIC: review.created
+## TOPIC: `review.created`
 
-**Schema:**
+### Schema
 ```json
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
@@ -448,8 +495,9 @@ Example:
   },
   "required": ["reviewId", "productId", "userId", "rating", "comment", "createdAt"]
 }
+```
 
-**Example:**
+### Example
 ```json
 {
   "reviewId": 9001,
@@ -459,11 +507,13 @@ Example:
   "comment": "Отличный товар!",
   "createdAt": "2025-10-11T13:00:00Z"
 }
+```
 
+---
 
-## TOPIC: review.published
+## TOPIC: `review.published`
 
-**Schema:**
+### Schema
 ```json
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
@@ -478,8 +528,9 @@ Example:
   },
   "required": ["reviewId", "productId", "changedAt"]
 }
+```
 
-**Example:**
+### Example
 ```json
 {
   "reviewId": 9001,
@@ -487,11 +538,13 @@ Example:
   "changedAt": "2025-10-11T16:30:00Z",
   "moderator": "admin@eshop.local"
 }
+```
 
+---
 
-## TOPIC: review.rejected
+## TOPIC: `review.rejected`
 
-**Schema:**
+### Schema
 ```json
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
@@ -507,8 +560,9 @@ Example:
   },
   "required": ["reviewId", "productId", "changedAt"]
 }
+```
 
-**Example:**
+### Example
 ```json
 {
   "reviewId": 9001,
@@ -517,11 +571,13 @@ Example:
   "changedAt": "2025-10-11T16:35:00Z",
   "moderator": "admin@eshop.local"
 }
+```
 
+---
 
-## TOPIC: inventory.updated
+## TOPIC: `inventory.updated`
 
-**Schema:**
+### Schema
 ```json
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
@@ -538,8 +594,9 @@ Example:
   },
   "required": ["productId", "onHand", "reserved", "available", "updatedAt"]
 }
+```
 
-**Example:**
+### Example
 ```json
 {
   "productId": 105,
@@ -549,4 +606,4 @@ Example:
   "available": 115,
   "updatedAt": "2025-10-11T08:30:00Z"
 }
-
+```
