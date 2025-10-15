@@ -35,3 +35,4 @@ nav:
 
   - Integration:
     - Kafka Documentation: integration/kafka.md
+    - Messages and Examples: integration/messages.md
